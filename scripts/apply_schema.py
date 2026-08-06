@@ -17,7 +17,7 @@ import asyncpg
 
 from app.core.config import settings
 
-_SETUP_SQL_PATH = Path(__file__).resolve().parent.parent / "setup.sql"
+_SETUP_SQL_PATH = Path(__file__).resolve().parent / "setup.sql"
 
 # Persists the search_path for anyone connecting directly (psql, admin
 # tools); the app itself doesn't need it since every ORM model is

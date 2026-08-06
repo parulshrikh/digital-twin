@@ -1,0 +1,4 @@
+# Default owner for everything not matched by a more specific rule below.
+# Only takes effect on PRs if branch protection has "Require review from
+# Code Owners" enabled.
+* @shtewari19

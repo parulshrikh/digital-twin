@@ -1,14 +1,11 @@
-# Core API
+# Digital Twin API
 
 A FastAPI backend for a domain-agnostic message-testing platform: operators
 define a **domain** (market/audience context), spin up a **study** with
-candidate **messages** and an **avatar** panel (AI personas), run the study
-through an SSR pipeline, and get back a ranked recommendation plus a
-qualitative report.
+candidate **messages** and an **avatar** panel (AI personas — digital twins
+of the target audience), run the study through an SSR pipeline, and get
+back a ranked recommendation plus a qualitative report.
 
-This repo currently holds a **walking skeleton** — one real, DB-backed
-endpoint (`GET /api/v1/domains`) proving the full stack round-trips, not a
-complete implementation.
 
 ## Stack
 
@@ -80,24 +77,30 @@ scripts/
 docker-compose.yml      Postgres (pgvector) + Redis for local dev
 ```
 
-## Notes on current design decisions
 
-**Auth is stubbed.** `app/api/deps.py`'s `get_current_user` always returns
-the single dev user seeded by `scripts/seed_dev_data.py`
-(`APP_DEV_USER_ID` in `.env`), not a real authenticated identity. Real
-Entra ID JWT validation replaces this later — every route already depends
-on `get_current_user`, so only that function's body will need to change.
+## Contributing
 
-**Schema management has no migration tool yet.** `scripts/apply_schema.py`
-applies `setup.sql` directly via `asyncpg`; there's no migration history and
-no `downgrade`. Re-running it against an already-schema'd database will fail
-on `CREATE TABLE`/`CREATE SCHEMA` — for now, drop and recreate the database
-to reset. Alembic (or similar) is worth reintroducing once there's an actual
-second schema version to manage.
+**Branch naming.** GitHub doesn't natively enforce branch-name prefixes, so
+this is convention rather than a hard gate — branch off `main` using one of:
 
-**`/api/v1` prefix.** Matches the API spec's documented base path, and
-leaves room for a `v2` later without breaking existing clients.
+- `feature/short-description` — new features
+- `fix/short-description` — bug fixes
+- `chore/short-description` — maintenance, dependencies, refactoring
 
-**Only `User` and `Domain` are modeled as SQLAlchemy ORM classes.** The rest
-of `setup.sql`'s tables (studies, messages, avatars, runs, ...) get a model
-each as their verticals are built out.
+**Pull requests** auto-populate from
+[`.github/pull_request_template.md`](.github/pull_request_template.md).
+
+**CI** ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs `ruff
+check` on every push and pull request to `main`. Run the same check locally
+before pushing:
+
+```bash
+pip install -r requirements-dev.txt
+ruff check .
+```
+
+**Dependency updates** ([`.github/dependabot.yml`](.github/dependabot.yml))
+opens weekly PRs to bump pip dependencies and the GitHub Actions used in
+`ci.yml`. [`CODEOWNERS`](.github/CODEOWNERS) assigns `@shtewari19` as the
+default reviewer for everything — only takes effect on PRs if branch
+protection has "Require review from Code Owners" enabled.
