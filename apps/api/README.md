@@ -78,6 +78,19 @@ scripts/
 pyproject.toml          Dependencies (PEP 621) + ruff config
 ```
 
+## Setup Prism
+--follow the below steps:
+need to have node version as 22 
+nvm install 22
+nvm use 22
+npm run mock:api
+npm install --save-dev @stoplight/prism-cli@latest
+npx prism --version
+npx prism mock openapi-test.yaml -p 4010
+
+testing - curl http://localhost:4010/api/v1/domains
+
+
 ## Notes on current design decisions
 
 **Auth is stubbed.** `app/api/deps.py`'s `get_current_user` always returns
