@@ -94,6 +94,7 @@ npx prism mock openapi-test.yaml -p 4010
 # Test endpoint
 curl http://localhost:4010/api/v1/domains
 ## Notes on current design decisions
+```
 
 **Auth is stubbed.** `app/api/deps.py`'s `get_current_user` always returns
 the single dev user seeded by `scripts/seed_dev_data.py`
