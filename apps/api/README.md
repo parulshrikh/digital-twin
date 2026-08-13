@@ -93,7 +93,6 @@ npx prism mock openapi-test.yaml -p 4010
 
 # Test endpoint
 curl http://localhost:4010/api/v1/domains
-## Notes on current design decisions
 ```
 
 ## Notes on current design decisions
