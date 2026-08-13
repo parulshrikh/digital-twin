@@ -96,6 +96,8 @@ curl http://localhost:4010/api/v1/domains
 ## Notes on current design decisions
 ```
 
+## Notes on current design decisions
+
 **Auth is stubbed.** `app/api/deps.py`'s `get_current_user` always returns
 the single dev user seeded by `scripts/seed_dev_data.py`
 (`APP_DEV_USER_ID` in `.env`), not a real authenticated identity. Real
